@@ -1,5 +1,6 @@
 package model
 
+
 class Cuadrado (var color: Int, var ancho: Int, var alto: Int){
     //Coordenadas iniciales
 
