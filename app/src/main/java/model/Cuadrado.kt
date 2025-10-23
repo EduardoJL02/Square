@@ -1,7 +1,7 @@
 package model
 
 
-class Cuadrado (var color: Int, var ancho: Int, var alto: Int){
+class Cuadrado (var ancho: Int, var alto: Int){
     //Coordenadas iniciales
 
     var x :Int = 0

@@ -3,9 +3,9 @@ package com.example.cuadrado
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import model.Cuadrado
 
 
@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         //Indentificacion de la cista
-        val cuadradoView : View = findViewById<View>(R.id.cuadrado)
+        val cuadradoView : ImageView = findViewById<ImageView>(R.id.cuadrado)
 
         /*usamos metodo post para que se ejecute este bloque de cogido en el hilo de la interfaz de usuario justo después de que se cargue
         la vista se construya y se mida
@@ -30,8 +30,7 @@ class MainActivity : AppCompatActivity() {
             val inicialY : Int =  cuadradoView.y.toInt()
 
             //Asociar la vista con el objeto cuadrado
-            //ContextCompact es una clase para aceder a recursos
-            val cuadrado : Cuadrado = Cuadrado(ContextCompat.getColor(this, R.color.red), inicialAncho, inicialAlto).apply{
+            val cuadrado = Cuadrado(inicialAncho, inicialAlto).apply{
                 x = inicialX
                 y = inicialY
             }
@@ -42,7 +41,6 @@ class MainActivity : AppCompatActivity() {
             var buttonIzquierda : Button = findViewById<Button>(R.id.buttonIzquierda)
             var buttonAumentarTamanio : Button = findViewById<Button>(R.id.buttonAumentarTamanio)
             var buttonDisminuirtamanio : Button = findViewById<Button>(R.id.buttonDisminuirTamanio)
-            var buttonCambiarColor : Button = findViewById<Button>(R.id.buttonCambiarColor)
 
             //Ponemos botones a la escucha
             buttonArriba.setOnClickListener{
@@ -97,22 +95,7 @@ class MainActivity : AppCompatActivity() {
 
                 actualizarVista(cuadrado, cuadradoView)
             }
-
-            buttonCambiarColor.setOnClickListener{
-                //cuadrado.color = ContextCompat.getColor(this, R.color.blue)
-                cuadrado.color = generarColorAleatorio()
-                actualizarVista(cuadrado, cuadradoView)
-            }
         } //post
-    }
-
-    fun generarColorAleatorio () : Int {
-        val rojo = (0..255).random()
-        val verde = (0..255).random()
-        val azul = (0..255).random()
-
-        //Color es la clase para almacenar colores y el metod rgb saca el numero
-        return android.graphics.Color.rgb(rojo, verde, azul)
     }
 
     private fun actualizarVista (cuadrado:Cuadrado, cuadradoView:View){
@@ -121,9 +104,6 @@ class MainActivity : AppCompatActivity() {
         //La vista actulizara su ancho y su alto con los datos del objeto
         cuadradoView.layoutParams.width = cuadrado.ancho
         cuadradoView.layoutParams.height = cuadrado.alto
-
-        //Cambiamos el color
-        cuadradoView.setBackgroundColor(cuadrado.color)
 
         //Actulizamos las coordenadas
         cuadradoView.x = cuadrado.x.toFloat()
